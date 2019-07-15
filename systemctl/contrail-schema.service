@@ -1,0 +1,13 @@
+[Unit]
+Description=contrail-schema-transformer
+After=network.target
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=cloud
+ExecStart=/home/cloud/.nix-profile/bin/contrail-schema /etc/contrail/contrail-schema.conf
+[Install]
+WantedBy=multi-user.target
+

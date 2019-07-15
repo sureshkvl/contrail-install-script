@@ -1,0 +1,14 @@
+[Unit]
+Description=contrail-api
+After=network.target
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=cloud
+ExecStart=/home/cloud/.nix-profile/bin/contrail-api /etc/contrail/contrail-api.conf
+
+[Install]
+WantedBy=multi-user.target
+

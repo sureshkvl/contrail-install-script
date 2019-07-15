@@ -1,0 +1,14 @@
+[Unit]
+Description=contrail-svc-monitor
+After=network.target
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=cloud
+ExecStart=/home/cloud/.nix-profile/bin/contrail-svc-monitor /etc/contrail/contrail-svc-monitor.conf
+
+[Install]
+WantedBy=multi-user.target
+
