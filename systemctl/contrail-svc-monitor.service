@@ -3,11 +3,11 @@ Description=contrail-svc-monitor
 After=network.target
 StartLimitIntervalSec=0
 [Service]
-Type=simple
+Type=forking
 Restart=always
 RestartSec=1
 User=cloud
-ExecStart=/home/cloud/.nix-profile/bin/contrail-svc-monitor /etc/contrail/contrail-svc-monitor.conf
+ExecStart=/home/cloud/.nix-profile/bin/contrail-svc-monitor --conf_file /etc/contrail/contrail-svc-monitor.conf
 
 [Install]
 WantedBy=multi-user.target

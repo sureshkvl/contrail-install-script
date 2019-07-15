@@ -3,11 +3,11 @@ Description=contrail-collector
 After=network.target
 StartLimitIntervalSec=0
 [Service]
-Type=simple
+Type=forking
 Restart=always
 RestartSec=1
 User=cloud
-ExecStart=/home/cloud/.nix-profile/bin/contrail-collector /etc/contrail/contrail-collector.conf
+ExecStart=/home/cloud/.nix-profile/bin/contrail-collector --conf_file /etc/contrail/contrail-collector.conf
 
 [Install]
 WantedBy=multi-user.target
