@@ -1,0 +1,12 @@
+[Unit]
+Description = Contrail query-engine
+
+[Service]
+ExecReload = /bin/kill -HUP $MAINPID
+TimeoutStopSec = 300
+KillMode = process
+ExecStart = /home/cloud/.nix-profile/bin/contrail-query-engine --conf_file /etc/contrail/contrail-query-engine.conf
+User = cloud
+
+[Install]
+WantedBy = multi-user.target

@@ -1,0 +1,13 @@
+[Unit]
+Description = Contrail analytics-api
+
+[Service]
+ExecReload = /bin/kill -HUP $MAINPID
+TimeoutStopSec = 300
+KillMode = process
+ExecStart = /home/cloud/.nix-profile/bin/contrail-analytics-api --conf_file /etc/contrail/contrail-analytics-api.conf
+User = cloud
+
+[Install]
+WantedBy = multi-user.target
+

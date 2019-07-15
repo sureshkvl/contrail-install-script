@@ -1,0 +1,12 @@
+[Unit]
+Description = Contrail svc-monitor
+
+[Service]
+ExecReload = /bin/kill -HUP $MAINPID
+TimeoutStopSec = 300
+KillMode = process
+ExecStart = /home/cloud/.nix-profile/bin/contrail-svc-monitor --conf_file /etc/contrail/contrail-svc-monitor.conf
+User = cloud
+
+[Install]
+WantedBy = multi-user.target
