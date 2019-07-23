@@ -55,9 +55,11 @@ cd nixpkgs-tungsten
 . /home/cloud/.nix-profile/etc/profile.d/nix.sh
 #Build and load the vrouter kernel module,its available only in my sureshkvl repo
 ./please build contrail50.vrouterModuleUbuntu_4_4_0_119_generic
-sudo insmod ./result/lib/modules/4.4.0-119-generic/extra/net/vrouter/vrouter.ko 
+sudo cp ./result/lib/modules/4.4.0-119-generic/extra/net/vrouter/vrouter.ko  /lib/modules/4.4.0-119-generic/.
+sudo insmod ./result/lib/modules/4.4.0-119-generic/extra/net/vrouter/vrouter.ko  vr_flow_entries=4096 vr_oflow_entries=512 vr_bridge_entries=128
 sudo lsmod |grep vrouter
 
+nix-env -f default.nix --set-flag priority 8 contrail-query-engine-5.0
 #install the vrouter agent
 ./please install contrail50.vrouterAgent
 ./please install contrail50.vrouterNetNs

@@ -117,7 +117,7 @@ Start the cassandra
 Edit /etc/redis/redis.conf
 
 ```
-bind 10.0.1.3
+bind 0.0.0.0
 ```
 Note: provide your system IP
 
@@ -129,6 +129,14 @@ ReStart the redis
 
 ```
 
+4. Setting up the rabbimq user
+
+```
+sudo rabbitmqctl add_user contrail contrail
+sudo rabbitmqctl set_permissions -p / contrail ".*" ".*" ".*"
+```
+
+
 4. Edit the contrail config files (/etc/contrail)
 Note: you need to change IP Address, host name
 
@@ -139,8 +147,146 @@ Note: you need to change IP Address, host name
 cd contrail-install-script/contrail
 ./contrail-services.sh stop
 ./contrail-services.sh start
+./contrail-services.sh status
+```
+
+6. check the log files
+
+/var/log/contrail
+
+
+
+
+### VROUTER installation
+
+
+1. Stop the neutron services (q-svc, q-meta,q-l3, q-dhcp, q-agt) in the screen
+
+2. Remove your existing nixpkgs-tungsten folder
+
+3. Run the Vrouter_install script
+
+```
+git clone https://github.com/sureshkvl/contrail-install-script
+cd contrail-install-script/contrail
+./vrouter_install.sh
+```
+
+4. check the vrouter kernel module is loaded. 
+```
+sudo lsmod |grep vrouter
+```
+
+
+5. Modify the vrouter_setup.sh script with relavent IP stuff and run it
+
+NOTE:  if the IP is wrong, system will not be reachable.
+
+
+```
+./vrouter_setup.sh
+
+```
+
+
+6. Verify the "vhost0" interface created
+
+
+```
+ifconfig
+```
+
+
+7. Modify the neutron config(/etc/neutron/neutron.conf) file
+
+disable  service_plugins, core_plugin line.
+
+```
+api_extensions_path = extensions:/usr/local/lib/python2.7/dist-packages/neutron_plugin_contrail/extensions
+
+core_plugin = neutron_plugin_contrail.plugins.opencontrail.contrail_plugin.NeutronPluginContrailCoreV2
+
+
+[quota]
+quota_driver = neutron_plugin_contrail.plugins.opencontrail.quota.driver.QuotaDriver
+
+```
+In keystone_auth section, comment the
+```
+#signing_dir = /var/cache/neutron
+#cafile = /opt/stack/data/ca-bundle.pem
+```
+
+
+8. Update /etc/neutron/plugins/opencontrail/ContrailPlugin.ini
+
+```
+[APISERVER]
+apply_subnet_host_routes = True
+api_server_ip = 10.0.1.7
+api_server_port = 8082
+multi_tenancy = False
+```
+
+9.  Edit the cfgm_common (bug)
+
+```
+#/usr/local/lib/python2.7/dist-packages/cfgm_common/__init__.py
+#SG_NO_RULE_NAME = '__no_rule__'
+```
+
+
+10. Run the neutron with opencontrail plugin conf file in the screen
+
+```
+/usr/local/bin/neutron-server --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/opencontrail/ContrailPlugin.ini & echo $! >/opt/stack/status/stack/q-svc.pid; fg || echo "q-svc failed to start" | tee "/opt/stack/status/stack/q-svc.failure"
+```
+
+
+11. Edit the /etc/contrail/contrail-vrouter-agent.conf and provide proper IP deails.
+
+
+12. Start the vrouter agent
+```
+sudo -i
+export LC_ALL="C"; unset LANGUAGE
+/home/cloud/.nix-profile/bin/contrail-vrouter-agent --config_file /etc/contrail/contrail-vrouter-agent.conf
+```
+systemctl doesnt work, need to check.???
+
+
+13. Provision VGW (Virtual Gateway)
+
+Create  the public network
+
+```
+source openrc admin admin
+neutron net-create public --router:external True --provider:network_type local
+neutron subnet-create --gateway 172.24.4.1 --allocation-pool start=172.24.4.5,end=172.24.4.50 public 172.24.4.0/24
+```
+
+14. setup the vgw
+
+Edit the IP details in the vgw_script.sh
+
+Run he below script
+>./vgw_setup.sh
+
+
+**Verify the vgw interface is created**
+>ifconfig vgw
+
+
+15. Run Contrail PROVISION script n CONTRAIL NODE
+
+Edit the script and update the IPs.
+
+```
+./provision_vrouter.sh
 ```
 
 
 
+
+### Testing
 

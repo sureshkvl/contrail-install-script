@@ -9,8 +9,8 @@ sudo apt-get install -y redis-server zookeeperd rabbitmq-server
 
 
 #creating rabbit mq users
-sudo rabbitmqctl add_user stackrabbit stackqueue
-sudo rabbitmqctl set_permissions -p / stackrabbit ".*" ".*" ".*"
+sudo rabbitmqctl add_user contrail contrail
+sudo rabbitmqctl set_permissions -p / contrail ".*" ".*" ".*"
 
 #install cassandra
 echo "deb http://www.apache.org/dist/cassandra/debian 311x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
