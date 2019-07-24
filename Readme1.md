@@ -29,7 +29,7 @@ This tutorial demonstrates Contrail 5.0 + Openstack Ocata on Ubuntu 16.04 VM.
 
 
 
-## 2. Installation Procedue
+## 2. Installation Procedure
 
 Setup:  I am using Ubuntu 16.04 VM (16GB RAM/4 Core Processor:)
 
@@ -243,10 +243,34 @@ multi_tenancy = False
 ```
 
 
-11. Edit the /etc/contrail/contrail-vrouter-agent.conf and provide proper IP deails.
+11. Include the Contrail VIF driver in the nova.conf file 
+
+Edit /etc/nova/nova.conf, under libvirt section include vif_driver as below,
 
 
-12. Start the vrouter agent
+```
+[libvirt]
+vif_driver = nova_contrail_vif.contrailvif.VRouterVIFDriver
+```
+
+
+12. Include the nix path in the nova execution search path (/etc/nova/rootwrap.conf)
+edit /etc/nova/rootwrap.conf
+
+Update exec_dirs line with /home/cloud/.nix-profile/bin
+
+```
+exec_dirs=/sbin,/usr/sbin,/bin,/usr/bin,/usr/local/sbin,/usr/local/bin,/home/cloud/.nix-profile/bin
+```
+
+
+13. Restart the nova services.
+
+
+14. Edit the /etc/contrail/contrail-vrouter-agent.conf and provide proper IP deails.
+
+
+15. Start the vrouter agent
 ```
 sudo -i
 export LC_ALL="C"; unset LANGUAGE
@@ -255,7 +279,7 @@ export LC_ALL="C"; unset LANGUAGE
 systemctl doesnt work, need to check.???
 
 
-13. Provision VGW (Virtual Gateway)
+16. Provision VGW (Virtual Gateway)
 
 Create  the public network
 
@@ -265,7 +289,7 @@ neutron net-create public --router:external True --provider:network_type local
 neutron subnet-create --gateway 172.24.4.1 --allocation-pool start=172.24.4.5,end=172.24.4.50 public 172.24.4.0/24
 ```
 
-14. setup the vgw
+17. setup the vgw
 
 Edit the IP details in the vgw_script.sh
 
@@ -277,7 +301,7 @@ Run he below script
 >ifconfig vgw
 
 
-15. Run Contrail PROVISION script n CONTRAIL NODE
+18. Run Contrail PROVISION script n CONTRAIL NODE
 
 Edit the script and update the IPs.
 
@@ -288,5 +312,35 @@ Edit the script and update the IPs.
 
 
 
-### Testing
+### Quick Testing
+
+Todo
+
+
+
+## 2. Checking the Services
+
+Contrail API:
+
+- check 8082(restapi) and 8084(introspect) ports are in listenting mode
+- Run Contrail-api-cli and could able to access the objects
+- open http://contrail-ip:8084 and see the introspect page
+
+
+
+Contrail Schema:
+
+
+
+contrail svc monitor:
+
+
+
+
+contrail analytics:
+
+
+
+
+
 
