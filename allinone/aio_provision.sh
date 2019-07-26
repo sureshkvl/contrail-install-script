@@ -73,6 +73,6 @@ function provision_vrouter(){
 
 }
 
-#create_publicnw
-#setupgw
+create_publicnw
+setupgw
 provision_vrouter
