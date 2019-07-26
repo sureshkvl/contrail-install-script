@@ -1,0 +1,13 @@
+[Unit]
+Description = Contrail collector
+
+[Service]
+ExecReload = /bin/kill -HUP $MAINPID
+TimeoutStopSec = 300
+KillMode = process
+ExecStart = /home/cloud/.nix-profile/bin/contrail-collector --conf_file /etc/contrail/contrail-collector.conf
+User = cloud
+
+[Install]
+WantedBy = multi-user.target
+

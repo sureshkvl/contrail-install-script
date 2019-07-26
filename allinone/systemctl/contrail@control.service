@@ -1,0 +1,13 @@
+[Unit]
+Description = Contrail control
+
+[Service]
+ExecReload = /bin/kill -HUP $MAINPID
+TimeoutStopSec = 300
+KillMode = process
+ExecStart = /home/cloud/.nix-profile/bin/contrail-control --conf_file /etc/contrail/contrail-control.conf
+User = root
+
+[Install]
+WantedBy = multi-user.target
+
