@@ -251,21 +251,21 @@ function configure_neutron() {
 
 #step1 - infra services
 #======================
-#setup_infra_services
-#configure_rabbitmq
-#configure_redis
-#configure_cassandra
-#check_infra_services
+setup_infra_services
+configure_rabbitmq
+configure_redis
+configure_cassandra
+check_infra_services
 
 #step2 - contrail config,contol,analytics
 #=======================================
-#install_contrail
-#copy_config
-#restart_contrail_services
+install_contrail
+copy_config
+restart_contrail_services
 
 #step3 - vrouter
 #=================
-#cleanup_ovs_footprints
-#build_vrouter
-#setup_vrouter
-#configure_neutron
+cleanup_ovs_footprints
+build_vrouter
+setup_vrouter
+configure_neutron
