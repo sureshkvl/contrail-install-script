@@ -1,7 +1,7 @@
 # contrail-install-script
 
 
-## 1. Introduction
+## 1. Introduction
 
 This tutorial helps to install tungsten-fabric (a.k.a) opencontrail (using nixpkgs-tungsten repo) and integreate with openstack.
 
@@ -10,13 +10,13 @@ This tutorial demonstrates Contrail 5.0 + Openstack Ocata on Ubuntu 16.04 VM.
 
 
 
-## 2. Installation Procedure
+## 2. Installation Procedure
 
 Setup:  I am using Ubuntu 16.04 VM (16GB RAM/4 Core Processor:)
 
 
 
-### 1. Devstack installation
+### A. Devstack installation
 
 **1. Download **
 
@@ -68,7 +68,7 @@ Stop the nova compute (n-cpu) in the screen or systemctl
 
 
 
-### 2. Contrail Installaion - PART1 
+### B. Contrail Installaion - PART1 
 
 1. Download and run install script 
 
@@ -89,7 +89,7 @@ Edit the aio_install.sh , and provide the proper input(IPs, interface, hostname 
 Note: This script installs the infra services(cassandra, rabbitmq, redis) and contrail services(config,control,analyics services) with default configuration.
 
 
-### 2. Contrail Installaion - PART2
+### C. Contrail Installaion - PART2
 
 **Manual steps**
 
@@ -146,7 +146,7 @@ systemctl doesnt work, need to check.???
 
 
 
-### 4. Contrail Installaion - PART3
+### D. Contrail Installaion - PART3
 
 1. Run Contrail PROVISION script 
 
