@@ -95,7 +95,7 @@ Note: This script installs the infra services(cassandra, rabbitmq, redis) and co
 
 1.  Edit the cfgm_common package (bug)
 
-- vi #/usr/local/lib/python2.7/dist-packages/cfgm_common/__init__.py
+-  sudo vi  /usr/local/lib/python2.7/dist-packages/cfgm_common/__init__.py
 - add this below line
 ```
 SG_NO_RULE_NAME = '__no_rule__'
