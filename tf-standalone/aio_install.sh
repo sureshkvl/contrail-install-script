@@ -1,24 +1,6 @@
 #!/bin/bash
 
-HOMEDIR=/home/cloud
-HOSTIP=10.0.1.5
-
-
-
-VIF=$HOMEDIR/.nix-profile/bin/vif
-PROVISION=$HOMEDIR/.nix-profile/bin/provision_vgw_interface.py
-
-
-#Global variables
-VHOST_INTERFACE_NAME=ens3
-VHOST_INTERFACE_CIDR=$HOSTIP/24
-VHOST_INTERFACE_IP=$HOSTIP
-DEFAULT_GW=10.0.1.1
-
-FLOATING_RANGE=${FLOATING_RANGE:-172.24.4.0/24}
-Q_L3_ENABLED=${Q_L3_ENABLED:-True}
-VGW_MASQUERADE=${VGW_MASQUERADE:-True}
-VR_KMOD_OPTS=${VR_KMOD_OPTS:-"vr_flow_entries=4096 vr_oflow_entries=512 vr_bridge_entries=128"}
+source ./aio_config.sh
 
 
 
@@ -141,8 +123,8 @@ function copy_config(){
 	
 
 	#copy the config files
-	sudo cp $HOMEDIR/contrail-install-script/allinone/config/* /etc/contrail/.
-	sudo cp $HOMEDIR/contrail-install-script/allinone/systemctl/* /etc/systemd/system/.
+	sudo cp $HOMEDIR/contrail-install-script/tf-standalone/config/* /etc/contrail/.
+	sudo cp $HOMEDIR/contrail-install-script/tf-standalone/systemctl/* /etc/systemd/system/.
 
 }
 

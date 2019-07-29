@@ -3,10 +3,10 @@
 
 ## 1. Introduction
 
-This tutorial helps to install tungsten-fabric (a.k.a) opencontrail (using nixpkgs-tungsten repo) and integreate with openstack.
+This tutorial helps to install tungsten-fabric (a.k.a) opencontrail (using nixpkgs-tungsten repo).
 
 
-This tutorial demonstrates Contrail 5.0 + Openstack Ocata on Ubuntu 16.04 VM.
+This tutorial demonstrates Contrail 5.0  on Ubuntu 16.04 VM.
 
 
 
@@ -16,59 +16,8 @@ Setup:  I am using Ubuntu 16.04 VM (16GB RAM/4 Core Processor:)
 
 
 
-### 1. Devstack installation
 
-**1. Download **
-
-```
-cd 
-git clone https://opendev.org/openstack/devstack
-cd devstack
-git checkout stable/ocata
-```
-
-
-**2. Create local.conf **
-vi local.conf
-
-
-```
-[[local|localrc]]
-RECLONE=True
-HOST_IP=10.0.1.4
-SERVICE_TOKEN=mytoken123
-ADMIN_PASSWORD=openstack123
-MYSQL_PASSWORD=mysql123
-RABBIT_PASSWORD=rabbit123
-SERVICE_PASSWORD=$ADMIN_PASSWORD
-LOGFILE=$DEST/logs/stack.sh.log
-LOGDAYS=2
-disable_service n-net tempest c-api c-sch c-vol
-enable_service q-svc q-agt q-dhcp q-l3 q-meta 
-```
-Note: provide your HOST_IP.
-
-**3.Start the installation**
-
-
-```
-./stack.sh
-```
-
-It will take 15 to 30 mins to complete it.
-
-
-
-**4.Stop the below services**
-
-
-Stop the neutron services (q-svc, q-meta,q-l3, q-dhcp, q-agt) in the screen or systemctl
-
-Stop the nova compute (n-cpu) in the screen or systemctl
-
-
-
-### 2. Contrail Installaion - PART1 
+### 1. Contrail Installaion - PART1 
 
 1. Download and run install script 
 
@@ -76,7 +25,7 @@ Stop the nova compute (n-cpu) in the screen or systemctl
 
 ```
 git clone https://github.com/sureshkvl/contrail-install-script
-cd contrail-install-script/allinone/
+cd contrail-install-script/tf-standalone/
 ```
 
 Edit the aio_install.sh , and provide the proper input(IPs, interface, hostname etc)

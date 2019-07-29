@@ -1,0 +1,13 @@
+[Unit]
+Description = Contrail vrouter agent
+
+[Service]
+ExecReload = /bin/kill -HUP $MAINPID
+TimeoutStopSec = 300
+KillMode = process
+ExecStart = /home/cloud/.nix-profile/bin/contrail-vrouter-agent --conf_file /etc/contrail/contrail-vrouter-agent.conf
+User = root
+
+[Install]
+WantedBy = multi-user.target
+
