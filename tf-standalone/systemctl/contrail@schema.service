@@ -1,0 +1,12 @@
+[Unit]
+Description = Contrail schema-transformer
+
+[Service]
+ExecReload = /bin/kill -HUP $MAINPID
+TimeoutStopSec = 300
+KillMode = process
+ExecStart = /home/cloud/.nix-profile/bin/contrail-schema --conf_file /etc/contrail/contrail-schema.conf
+User = cloud
+
+[Install]
+WantedBy = multi-user.target
