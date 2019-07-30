@@ -12,7 +12,7 @@ function provision_vrouter(){
 
         sudo $PROVISION_LINKLOCAL  --api_server_ip $API_SERVER_IP \
              --oper add --linklocal_service_name metadata --linklocal_service_ip 169.254.169.254 \
-             --linklocal_service_port 80 --ipfabric_service_ip $NOVA_SERVICE_HOST --ipfabric_service_port 8775
+             --linklocal_service_port 80 --ipfabric_service_ip $VROUTER_IP --ipfabric_service_port 8775
 
 }
 
